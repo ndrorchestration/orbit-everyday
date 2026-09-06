@@ -1,0 +1,32 @@
+name: Verify static prototype
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify required artifacts
+        run: |
+          test -s index.html
+          test -s README.md
+          test -s docs/RELEASE_CHECKLIST.md
+      - name: Verify evidence boundary
+        run: |
+          grep -q "EXECUTABLE STATIC PROTOTYPE" README.md
+          grep -q "NOT YET VERIFIED" README.md
+      - name: Record external network dependencies
+        run: |
+          if grep -Eq 'https?://' index.html; then
+            echo "External URL references detected in the static prototype. Strict zero-network operation is not yet established."
+          else
+            echo "No external URL references detected by this static check."
+          fi
