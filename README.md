@@ -1,75 +1,97 @@
 # Orbit Everyday
 
-**Orbit Everyday** is the plain-language interface for Orbit: a private, on-device way to understand where your thoughts return.
+**Orbit Everyday** is the plain-language, privacy-oriented UX track for Orbit: an interface for turning analytical state into understandable **Today / Patterns / Questions** views without requiring users to interpret the underlying mathematics.
 
-## Everyday Accessible
+> **Current status: EXECUTABLE STATIC PROTOTYPE / UX RESEARCH TRACK.** This repository contains a substantial single-file `index.html` implementation with deterministic analytical functions and interactive visualizations. It is no longer accurate to describe the application source as missing. The prototype is not yet a released or fully verified consumer product.
 
-The product is designed for non-technical users. The interface should explain results in terms of what a person can **see, understand, and do next**, rather than exposing mathematical machinery as the primary experience.
+## Role in the Orbit ecosystem
 
-### Core experience
+Orbit Everyday and Orbit-Driftwatch now have distinct purposes:
 
-Three tabs:
+- **Orbit Everyday** — accessible UX, interpretation, local/static analytical experiments, privacy-oriented interaction design.
+- **Orbit-Driftwatch** — executable public systems showcase for observable multi-agent orchestration, provider boundaries, provenance, source binding, and Driftwatch-derived telemetry.
 
-- **Today** — what is most relevant right now.
-- **Patterns** — recurring themes and loops, explained in ordinary language.
+Neither repository automatically validates the other. Shared ideas such as Today / Patterns / Open Questions describe design lineage, not transferred evidence.
+
+## Current implementation
+
+The checked-in `index.html` currently includes deterministic implementations and demonstrations for several analytical techniques, including:
+
+- Gram-matrix/eigenvalue-derived effective-rank experiments;
+- k-nearest-neighbor density calculations;
+- autocorrelation and delay-selection helpers;
+- Takens-style embedding experiments;
+- Rosenstein-style Lyapunov-exponent estimation;
+- deterministic seeded synthetic data generation;
+- interactive visual and explanatory panels.
+
+These are **implemented computational experiments**, not proof that the derived quantities have validated psychological, behavioral, or real-world semantic meaning.
+
+## Everyday Accessible design
+
+The intended primary experience remains:
+
+- **Today** — what is most relevant now.
+- **Patterns** — recurring structures explained in ordinary language.
 - **Questions** — unresolved or repeatedly returning questions.
 
-The system should help a person recognize patterns without requiring them to understand the underlying mathematics.
+Technical calculations should support the explanation rather than substitute for it. A value such as an effective-rank estimate should not be presented as a conclusion about a person without an independently justified semantic interpretation.
 
-## Accessibility baseline
+## Privacy and offline boundary
 
-- Light mode by default.
-- Inter, 16px body text.
-- Minimum 44px interactive targets.
-- Responsive desktop and mobile layout.
-- Plain-language labels and explanations.
-- Progressive disclosure for technical detail.
-- No technical metric should be required to understand the primary result.
+The design target is:
 
-## Technical foundation
+- local-first;
+- no application backend by default;
+- no uploaded personal data required for the static analytical prototype;
+- offline-capable where all required assets are local.
 
-The accessible interface sits above real analytical methods. Current technical direction includes:
+**Current limitation:** the present HTML imports web fonts from Google Fonts. Therefore a strict “zero network requests / fully offline” claim is **not yet verified** for the current file. The analytical logic itself is client-side, but the external-font dependency must be removed or vendored before the strict offline privacy gate can close.
 
-- Gram-matrix eigenvalue analysis.
-- k-nearest-neighbor (kNN) density analysis.
-- Lyapunov-style stability analysis.
+No future backend integration should silently weaken the local-first model. Networked capabilities, if introduced, should be opt-in and separately disclosed.
 
-These methods are implementation details unless a user explicitly chooses to inspect them. For example, an internal value such as `effRank 0.42 via Gram eigenvalues` should be translated into an understandable explanation before it is presented as a user-facing result.
+## Evidence boundary
 
-## Privacy model
+| Statement | Current status |
+|---|---|
+| Executable browser prototype exists | IMPLEMENTED |
+| Deterministic analytical functions exist | IMPLEMENTED |
+| Static/client-side analytical execution exists | IMPLEMENTED |
+| Mathematical routines have complete independent verification | **NOT YET ESTABLISHED** |
+| Today / Patterns / Questions product experience is release-complete | **NOT YET ESTABLISHED** |
+| Strict zero-network offline operation | **NOT YET VERIFIED — external font dependency remains** |
+| Analytical metrics have validated psychological/semantic meaning | **NOT ESTABLISHED** |
+| Consumer-product privacy/security review is complete | **NOT ESTABLISHED** |
 
-Orbit Everyday is intended to remain:
+## Verification priorities
 
-- **Private**
-- **On-device**
-- **Offline-capable**
-- **No-backend by default**
+The release checklist in [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md) remains the quality gate. Highest-value next checks are:
 
-The interface must not weaken this privacy model merely to make the product easier to demonstrate.
+1. remove the external font/network dependency and verify zero-network static operation;
+2. add deterministic fixtures and independent cross-checks for critical mathematical functions;
+3. verify keyboard, screen-reader, contrast, reduced-motion, canvas alternatives, and narrow-mobile behavior;
+4. reconcile every in-app `verified`/provenance label against retained evidence;
+5. bound large-input behavior and expensive calculations;
+6. smoke-test the exact release artifact in a clean browser context.
 
-## Repository status
-
-This repository is the canonical implementation workspace. The current repository contains the project baseline and documentation, but the previously supplied `orbit-everyday-github.zip` artifact was available only as an HTML archive-preview wrapper rather than recoverable application source.
-
-Accordingly, this repository does **not** invent missing application code. The next implementation commit should add the verified source artifact when it is available.
-
-## Structure target
+## Repository structure
 
 ```text
 orbit-everyday/
-├── .gitignore
-├── LICENSE
+├── index.html                  # current executable static prototype
 ├── README.md
-├── src/
-├── public/
-├── tests/
-└── docs/
+├── LICENSE
+├── docs/
+│   └── RELEASE_CHECKLIST.md
+└── .gitignore
 ```
+
+A future modularization into `src/`, `tests/`, and `public/` may improve maintainability, but the current single-file prototype is real source and should be evaluated as such rather than described as missing.
 
 ## Quality rule
 
 Orbit Everyday should be judged first from the user's perspective:
 
-> Can a non-technical person understand what Orbit found, why it matters, and what they can do next?
+> Can a non-technical person understand what Orbit computed, what is directly observed versus inferred, why it may matter, and what remains uncertain?
 
-Mathematical rigor remains important, but it supports the experience rather than becoming the experience.
+Mathematical rigor supports that experience; it does not turn an exploratory metric into a validated human conclusion.
